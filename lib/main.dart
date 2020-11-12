@@ -1,77 +1,84 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        brightness: Brightness.dark,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
       home: MainView(),
     );
   }
 }
 
-class MainView extends StatelessWidget {
+class MainView extends StatefulWidget {
+  @override
+  _MainViewState createState() => _MainViewState();
+}
+
+class _MainViewState extends State<MainView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("TIG169-TODO"),
-          actions: [
-            IconButton(
-              icon: Icon(Icons.arrow_right),
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => SecondView()));
-              },
-            )
+      //backgroundColor: Colors.black,
+      appBar: AppBar(
+        title: Text("TIG169-TODO"),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.arrow_right),
+            onPressed: () {
+              myGridView();
+            },
+          )
+        ],
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _rowTodo(),
+            _rowTodo(),
+            _rowTodo(),
+            _rowTodo(),
+            _rowTodo(),
+            // _buttonToNextView(context),
           ],
         ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _rowTodo(),
-              _rowTodo(),
-              _rowTodo(),
-              _rowTodo(),
-              _rowTodo(),
-              _rowTodo(),
-              _rowTodo(),
-              _rowTodo(),
-              _buttonToNextView(context),
-            ],
-          ),
-        ));
-  }
+      ),
 
-  Widget _rowTodo() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Checkbox(value: false, onChanged: null),
-        Container(
-          width: 20,
-          height: 65,
-        ),
-        Text(
-          "Thing to do",
-          style: TextStyle(fontSize: 25),
-        ),
-        Container(
-          width: 170,
-        ),
-        Icon(
-          Icons.cancel_sharp,
-        )
-      ],
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => SecondView()));
+        },
+      ),
     );
   }
 
-  Widget _buttonToNextView(BuildContext context) {
+  Widget _rowTodo() {
+    return ListTile(
+      leading: Checkbox(value: false, onChanged: null),
+      title: Text("Thing to do"),
+      subtitle: Text("When to do it"),
+      trailing: Icon(Icons.remove_circle_outline_outlined),
+    );
+  }
+
+  /*Widget _buttonToNextView(BuildContext context) {
     return Container(
         height: 80,
         width: 320,
@@ -80,16 +87,93 @@ class MainView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             IconButton(
-                icon: Icon(
-                  Icons.add_circle_rounded,
-                  size: 90.90,
-                ),
+                icon: Icon(Icons.add_circle_rounded, size: 90.0),
                 onPressed: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => SecondView()));
                 })
           ],
         ));
+  }*/
+
+  Widget myGridView() {
+    return GridView.count(
+      crossAxisCount: 2,
+      padding: EdgeInsets.all(15),
+      crossAxisSpacing: 15,
+      mainAxisSpacing: 5,
+      children: <Widget>[
+        Container(
+            color: Colors.amberAccent,
+            child: Stack(
+              children: <Widget>[
+                Positioned(
+                  child: myPopMenu(),
+                  right: 0,
+                )
+              ],
+            )),
+        Container(
+            color: Colors.deepOrangeAccent,
+            child: Stack(
+              children: <Widget>[
+                Positioned(
+                  child: myPopMenu(),
+                  right: 0,
+                )
+              ],
+            )),
+      ],
+    );
+  }
+
+  Widget myPopMenu() {
+    return PopupMenuButton(
+        onSelected: (value) {
+          Fluttertoast.showToast(
+              msg: "You have selected " + value.toString(),
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.black,
+              textColor: Colors.white,
+              fontSize: 16.0);
+        },
+        itemBuilder: (context) => [
+              PopupMenuItem(
+                  value: 1,
+                  child: Row(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(2, 2, 8, 2),
+                        child: Icon(Icons.print),
+                      ),
+                      Text('Print')
+                    ],
+                  )),
+              PopupMenuItem(
+                  value: 2,
+                  child: Row(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(2, 2, 8, 2),
+                        child: Icon(Icons.share),
+                      ),
+                      Text('Share')
+                    ],
+                  )),
+              PopupMenuItem(
+                  value: 3,
+                  child: Row(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(2, 2, 8, 2),
+                        child: Icon(Icons.add_circle),
+                      ),
+                      Text('Add')
+                    ],
+                  )),
+            ]);
   }
 }
 
