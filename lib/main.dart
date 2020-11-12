@@ -33,7 +33,6 @@ class _MainViewState extends State<MainView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //backgroundColor: Colors.black,
       appBar: AppBar(
         title: Text("TIG169-TODO"),
         actions: [
@@ -55,11 +54,9 @@ class _MainViewState extends State<MainView> {
             _rowTodo(),
             _rowTodo(),
             _rowTodo(),
-            // _buttonToNextView(context),
           ],
         ),
       ),
-
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
@@ -77,24 +74,6 @@ class _MainViewState extends State<MainView> {
       trailing: Icon(Icons.remove_circle_outline_outlined),
     );
   }
-
-  /*Widget _buttonToNextView(BuildContext context) {
-    return Container(
-        height: 80,
-        width: 320,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            IconButton(
-                icon: Icon(Icons.add_circle_rounded, size: 90.0),
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => SecondView()));
-                })
-          ],
-        ));
-  }*/
 
   Widget myGridView() {
     return GridView.count(
