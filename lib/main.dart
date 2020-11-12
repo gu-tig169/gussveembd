@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -38,11 +40,19 @@ class _MainViewState extends State<MainView> {
         actions: [
           IconButton(
             icon: Icon(Icons.arrow_right),
-            onPressed: () {
-              myGridView();
-            },
+            onPressed: () {},
           )
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => SecondView()));
+        },
+        child: Text(
+          "+",
+          style: TextStyle(fontSize: 35),
+        ),
       ),
       body: Center(
         child: Column(
@@ -57,12 +67,6 @@ class _MainViewState extends State<MainView> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => SecondView()));
-        },
-      ),
     );
   }
 
@@ -73,86 +77,6 @@ class _MainViewState extends State<MainView> {
       subtitle: Text("When to do it"),
       trailing: Icon(Icons.remove_circle_outline_outlined),
     );
-  }
-
-  Widget myGridView() {
-    return GridView.count(
-      crossAxisCount: 2,
-      padding: EdgeInsets.all(15),
-      crossAxisSpacing: 15,
-      mainAxisSpacing: 5,
-      children: <Widget>[
-        Container(
-            color: Colors.amberAccent,
-            child: Stack(
-              children: <Widget>[
-                Positioned(
-                  child: myPopMenu(),
-                  right: 0,
-                )
-              ],
-            )),
-        Container(
-            color: Colors.deepOrangeAccent,
-            child: Stack(
-              children: <Widget>[
-                Positioned(
-                  child: myPopMenu(),
-                  right: 0,
-                )
-              ],
-            )),
-      ],
-    );
-  }
-
-  Widget myPopMenu() {
-    return PopupMenuButton(
-        onSelected: (value) {
-          Fluttertoast.showToast(
-              msg: "You have selected " + value.toString(),
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.BOTTOM,
-              timeInSecForIosWeb: 1,
-              backgroundColor: Colors.black,
-              textColor: Colors.white,
-              fontSize: 16.0);
-        },
-        itemBuilder: (context) => [
-              PopupMenuItem(
-                  value: 1,
-                  child: Row(
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(2, 2, 8, 2),
-                        child: Icon(Icons.print),
-                      ),
-                      Text('Print')
-                    ],
-                  )),
-              PopupMenuItem(
-                  value: 2,
-                  child: Row(
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(2, 2, 8, 2),
-                        child: Icon(Icons.share),
-                      ),
-                      Text('Share')
-                    ],
-                  )),
-              PopupMenuItem(
-                  value: 3,
-                  child: Row(
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(2, 2, 8, 2),
-                        child: Icon(Icons.add_circle),
-                      ),
-                      Text('Add')
-                    ],
-                  )),
-            ]);
   }
 }
 
