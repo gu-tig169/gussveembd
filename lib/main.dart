@@ -84,8 +84,8 @@ class _MainViewState extends State<MainView> {
   Widget _rowTodo() {
     return ListTile(
       leading: Checkbox(value: false, onChanged: null),
-      title: Text("Thing to do"),
-      subtitle: Text("When to do it"),
+      title: Text("Thing to do..."),
+      subtitle: Text("When to do it..."),
       trailing: Icon(Icons.remove_circle_outline_outlined),
     );
   }
