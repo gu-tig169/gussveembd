@@ -31,17 +31,13 @@ class MainView extends StatefulWidget {
 }
 
 class _MainViewState extends State<MainView> {
+  WhyFarther _selection;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("TIG169-TODO"),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.arrow_right),
-            onPressed: () {},
-          )
-        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -58,6 +54,22 @@ class _MainViewState extends State<MainView> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            PopupMenuButton<WhyFarther>(
+              onSelected: (WhyFarther result) {
+                setState(() {
+                  _selection = result;
+                });
+              },
+              itemBuilder: (BuildContext context) =>
+                  <PopupMenuEntry<WhyFarther>>[
+                const PopupMenuItem<WhyFarther>(
+                    value: WhyFarther.all, child: Text("All")),
+                const PopupMenuItem<WhyFarther>(
+                    value: WhyFarther.done, child: Text("Done")),
+                const PopupMenuItem<WhyFarther>(
+                    value: WhyFarther.undone, child: Text("Undone")),
+              ],
+            ),
             _rowTodo(),
             _rowTodo(),
             _rowTodo(),
@@ -78,6 +90,8 @@ class _MainViewState extends State<MainView> {
     );
   }
 }
+
+enum WhyFarther { all, done, undone }
 
 class SecondView extends StatelessWidget {
   BuildContext get context => null;
