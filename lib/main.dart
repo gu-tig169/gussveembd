@@ -12,6 +12,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -31,15 +33,30 @@ class MainView extends StatefulWidget {
 }
 
 class _MainViewState extends State<MainView> {
-  WhyFarther _selection;
+
+  String _value;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("TIG169-TODO"),
+        title: Center(child: Text("TIG169-TODO")),
       ),
-      floatingActionButton: FloatingActionButton(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _popup(context),
+            _rowTodo(),
+            _rowTodo(),
+            _rowTodo(),
+            _rowTodo(),
+            _rowTodo(),
+          ],
+        ),
+      ),
+            floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => SecondView()));
@@ -49,33 +66,42 @@ class _MainViewState extends State<MainView> {
           style: TextStyle(fontSize: 35),
         ),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            PopupMenuButton<WhyFarther>(
-              onSelected: (WhyFarther result) {
-                setState(() {
-                  _selection = result;
-                });
-              },
-              itemBuilder: (BuildContext context) =>
-                  <PopupMenuEntry<WhyFarther>>[
-                const PopupMenuItem<WhyFarther>(
-                    value: WhyFarther.all, child: Text("All")),
-                const PopupMenuItem<WhyFarther>(
-                    value: WhyFarther.done, child: Text("Done")),
-                const PopupMenuItem<WhyFarther>(
-                    value: WhyFarther.undone, child: Text("Undone")),
-              ],
-            ),
-            _rowTodo(),
-            _rowTodo(),
-            _rowTodo(),
-            _rowTodo(),
-            _rowTodo(),
-          ],
+    ); 
+  }
+
+
+   Widget _popup(BuildContext context) {
+    return Container(
+      margin:  EdgeInsets.only(
+        left: 20,
+      ),
+      child: DropdownButton<String>(
+        items: [
+          DropdownMenuItem<String>(
+            child: Text('All'),
+            value: 'one',
+          ),
+          DropdownMenuItem<String>(
+            child: Text('Done'),
+            value: 'two',
+          ),
+          DropdownMenuItem<String>(
+            child: Text('Not done'),
+            value: 'three',
+          ),
+        ],
+        onChanged: (String value) {
+          setState(() {
+            _value = value;
+          });
+        },
+        hint: Text('All'),
+        value: _value,
+        underline: Container(
+        ),
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          color: Colors.white70,
         ),
       ),
     );
@@ -89,9 +115,9 @@ class _MainViewState extends State<MainView> {
       trailing: Icon(Icons.remove_circle_outline_outlined),
     );
   }
-}
 
-enum WhyFarther { all, done, undone }
+  
+}
 
 class SecondView extends StatelessWidget {
   BuildContext get context => null;
