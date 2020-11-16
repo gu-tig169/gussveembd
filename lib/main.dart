@@ -12,8 +12,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -33,7 +31,6 @@ class MainView extends StatefulWidget {
 }
 
 class _MainViewState extends State<MainView> {
-
   String _value;
 
   @override
@@ -41,82 +38,106 @@ class _MainViewState extends State<MainView> {
     return Scaffold(
       appBar: AppBar(
         title: Center(child: Text("TIG169-TODO")),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _popup(context),
-            _rowTodo(),
-            _rowTodo(),
-            _rowTodo(),
-            _rowTodo(),
-            _rowTodo(),
-          ],
-        ),
-      ),
-            floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => SecondView()));
-        },
-        child: Text(
-          "+",
-          style: TextStyle(fontSize: 35),
-        ),
-      ),
-    ); 
-  }
-
-
-   Widget _popup(BuildContext context) {
-    return Container(
-      margin:  EdgeInsets.only(
-        left: 20,
-      ),
-      child: DropdownButton<String>(
-        items: [
-          DropdownMenuItem<String>(
-            child: Text('All'),
-            value: 'one',
-          ),
-          DropdownMenuItem<String>(
-            child: Text('Done'),
-            value: 'two',
-          ),
-          DropdownMenuItem<String>(
-            child: Text('Not done'),
-            value: 'three',
-          ),
+        actions: [
+          _popup(context),
         ],
-        onChanged: (String value) {
-          setState(() {
-            _value = value;
-          });
-        },
-        hint: Text('All'),
-        value: _value,
-        underline: Container(
-        ),
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-          color: Colors.white70,
-        ),
+      ),
+      body: _viewList(),
+      floatingActionButton: _nextPageButton(),
+    );
+  }
+
+  Widget _viewList() {
+    return ListView(
+      children: [
+        _item("Task to do...", "When to do it...", true),
+        _item("Task to do...", "When to do it...", false),
+        _item("Task to do...", "When to do it...", true),
+        _item("Task to do...", "When to do it...", true),
+        _item("Task to do...", "When to do it...", false),
+        _item("Task to do...", "When to do it...", true),
+        _item("Task to do...", "When to do it...", true),
+        _item("Task to do...", "When to do it...", true),
+        _item("Task to do...", "When to do it...", false),
+        _item("Task to do...", "When to do it...", true),
+        _item("Task to do...", "When to do it...", true),
+        _item("Task to do...", "When to do it...", false),
+        _item("Task to do...", "When to do it...", true),
+        _item("Task to do...", "When to do it...", true),
+      ],
+    );
+  }
+
+  Widget _item(task, when, bool) {
+    return CheckboxListTile(
+      title: Text(task),
+      subtitle: Text(when),
+      controlAffinity: ListTileControlAffinity.leading,
+      secondary: Icon(Icons.delete),
+      value: bool,
+      onChanged: (value) {
+        setState(() {
+          bool = value;
+        });
+      },
+      activeColor: Colors.black45,
+    );
+  }
+
+  Widget _nextPageButton() {
+    return FloatingActionButton(
+      onPressed: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => SecondView()));
+      },
+      child: Text(
+        "+",
+        style: TextStyle(fontSize: 35),
       ),
     );
   }
 
-  Widget _rowTodo() {
-    return ListTile(
-      leading: Checkbox(value: false, onChanged: null),
-      title: Text("Thing to do..."),
-      subtitle: Text("When to do it..."),
-      trailing: Icon(Icons.remove_circle_outline_outlined),
+  Widget _popup(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: 40,
+        right: 40,
+      ),
+      child: Container(
+        margin: EdgeInsets.only(
+          left: 20,
+        ),
+        child: DropdownButton<String>(
+          items: [
+            DropdownMenuItem<String>(
+              child: Text('All'),
+              value: 'one',
+            ),
+            DropdownMenuItem<String>(
+              child: Text('Done'),
+              value: 'two',
+            ),
+            DropdownMenuItem<String>(
+              child: Text('Not done'),
+              value: 'three',
+            ),
+          ],
+          onChanged: (String value) {
+            setState(() {
+              _value = value;
+            });
+          },
+          hint: Text('All'),
+          value: _value,
+          underline: Container(),
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.white70,
+          ),
+        ),
+      ),
     );
   }
-
-  
 }
 
 class SecondView extends StatelessWidget {
