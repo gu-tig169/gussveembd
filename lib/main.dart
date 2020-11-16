@@ -1,5 +1,6 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 void main() {
   runApp(MyApp());
@@ -30,150 +31,112 @@ class MainView extends StatefulWidget {
 }
 
 class _MainViewState extends State<MainView> {
+  String _value;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //backgroundColor: Colors.black,
       appBar: AppBar(
-        title: Text("TIG169-TODO"),
+        title: Center(child: Text("TIG169-TODO")),
         actions: [
-          IconButton(
-            icon: Icon(Icons.arrow_right),
-            onPressed: () {
-              myGridView();
-            },
-          )
+          _popup(context),
         ],
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _rowTodo(),
-            _rowTodo(),
-            _rowTodo(),
-            _rowTodo(),
-            _rowTodo(),
-            // _buttonToNextView(context),
-          ],
-        ),
-      ),
-
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => SecondView()));
-        },
-      ),
+      body: _viewList(),
+      floatingActionButton: _nextPageButton(),
     );
   }
 
-  Widget _rowTodo() {
-    return ListTile(
-      leading: Checkbox(value: false, onChanged: null),
-      title: Text("Thing to do"),
-      subtitle: Text("When to do it"),
-      trailing: Icon(Icons.remove_circle_outline_outlined),
-    );
-  }
-
-  /*Widget _buttonToNextView(BuildContext context) {
-    return Container(
-        height: 80,
-        width: 320,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            IconButton(
-                icon: Icon(Icons.add_circle_rounded, size: 90.0),
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => SecondView()));
-                })
-          ],
-        ));
-  }*/
-
-  Widget myGridView() {
-    return GridView.count(
-      crossAxisCount: 2,
-      padding: EdgeInsets.all(15),
-      crossAxisSpacing: 15,
-      mainAxisSpacing: 5,
-      children: <Widget>[
-        Container(
-            color: Colors.amberAccent,
-            child: Stack(
-              children: <Widget>[
-                Positioned(
-                  child: myPopMenu(),
-                  right: 0,
-                )
-              ],
-            )),
-        Container(
-            color: Colors.deepOrangeAccent,
-            child: Stack(
-              children: <Widget>[
-                Positioned(
-                  child: myPopMenu(),
-                  right: 0,
-                )
-              ],
-            )),
+  Widget _viewList() {
+    return ListView(
+      children: [
+        _item("Task to do...", "When to do it...", true),
+        _item("Task to do...", "When to do it...", false),
+        _item("Task to do...", "When to do it...", true),
+        _item("Task to do...", "When to do it...", true),
+        _item("Task to do...", "When to do it...", false),
+        _item("Task to do...", "When to do it...", true),
+        _item("Task to do...", "When to do it...", true),
+        _item("Task to do...", "When to do it...", true),
+        _item("Task to do...", "When to do it...", false),
+        _item("Task to do...", "When to do it...", true),
+        _item("Task to do...", "When to do it...", true),
+        _item("Task to do...", "When to do it...", false),
+        _item("Task to do...", "When to do it...", true),
+        _item("Task to do...", "When to do it...", true),
       ],
     );
   }
 
-  Widget myPopMenu() {
-    return PopupMenuButton(
-        onSelected: (value) {
-          Fluttertoast.showToast(
-              msg: "You have selected " + value.toString(),
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.BOTTOM,
-              timeInSecForIosWeb: 1,
-              backgroundColor: Colors.black,
-              textColor: Colors.white,
-              fontSize: 16.0);
-        },
-        itemBuilder: (context) => [
-              PopupMenuItem(
-                  value: 1,
-                  child: Row(
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(2, 2, 8, 2),
-                        child: Icon(Icons.print),
-                      ),
-                      Text('Print')
-                    ],
-                  )),
-              PopupMenuItem(
-                  value: 2,
-                  child: Row(
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(2, 2, 8, 2),
-                        child: Icon(Icons.share),
-                      ),
-                      Text('Share')
-                    ],
-                  )),
-              PopupMenuItem(
-                  value: 3,
-                  child: Row(
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(2, 2, 8, 2),
-                        child: Icon(Icons.add_circle),
-                      ),
-                      Text('Add')
-                    ],
-                  )),
-            ]);
+  Widget _item(task, when, bool) {
+    return CheckboxListTile(
+      title: Text(task),
+      subtitle: Text(when),
+      controlAffinity: ListTileControlAffinity.leading,
+      secondary: Icon(Icons.delete),
+      value: bool,
+      onChanged: (value) {
+        setState(() {
+          bool = value;
+        });
+      },
+      activeColor: Colors.black45,
+    );
+  }
+
+  Widget _nextPageButton() {
+    return FloatingActionButton(
+      onPressed: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => SecondView()));
+      },
+      child: Text(
+        "+",
+        style: TextStyle(fontSize: 35),
+      ),
+    );
+  }
+
+  Widget _popup(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: 40,
+        right: 40,
+      ),
+      child: Container(
+        margin: EdgeInsets.only(
+          left: 20,
+        ),
+        child: DropdownButton<String>(
+          items: [
+            DropdownMenuItem<String>(
+              child: Text('All'),
+              value: 'one',
+            ),
+            DropdownMenuItem<String>(
+              child: Text('Done'),
+              value: 'two',
+            ),
+            DropdownMenuItem<String>(
+              child: Text('Not done'),
+              value: 'three',
+            ),
+          ],
+          onChanged: (String value) {
+            setState(() {
+              _value = value;
+            });
+          },
+          hint: Text('All'),
+          value: _value,
+          underline: Container(),
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.white70,
+          ),
+        ),
+      ),
+    );
   }
 }
 
