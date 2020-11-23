@@ -14,9 +14,10 @@ class MyState extends ChangeNotifier {
 
   String _filterValue = 'one';
 
-  List<TodoItem> filtering(List<TodoItem> _list, String _filterAndy) {
+  List<TodoItem> filtering(List<TodoItem> _list, String _filterValue,) {
     if (_filterValue == 'one') {
       _filterList = _list;
+      
     }
 
     if (_filterValue == 'two') {
@@ -32,7 +33,7 @@ class MyState extends ChangeNotifier {
   }
 
   List<TodoItem> get list {
-    return filtering(_list, _filterValue);
+    return filtering(_list, _filterValue,);
   }
 
   void addTodo(TodoItem todo) {
@@ -59,4 +60,7 @@ class MyState extends ChangeNotifier {
     notifyListeners();
     return filtering;
   }
+
+
+  
 }
