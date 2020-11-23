@@ -26,7 +26,6 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        primarySwatch: Colors.blue,
         brightness: Brightness.dark,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),

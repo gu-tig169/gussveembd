@@ -17,20 +17,6 @@ class SecondViewState extends State<SecondView> {
     String task;
   bool checkbox;
 
-  TextEditingController textEditingController;
-  SecondViewState(TodoItem todo) {
-    this.task = todo.task;
-    this.checkbox = todo.checkbox;
-
-    textEditingController = TextEditingController(text: todo.task);
-
-    textEditingController.addListener(() {
-      setState(() {
-        task = textEditingController.text;
-      });
-    });
-  }
-
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
@@ -82,4 +68,26 @@ class SecondViewState extends State<SecondView> {
       ],
     );
   }
+
+
+  TextEditingController textEditingController;
+  SecondViewState(TodoItem todo) {
+    this.task = todo.task;
+    this.checkbox = todo.checkbox;
+
+    textEditingController = TextEditingController(text: todo.task);
+
+    textEditingController.addListener(() {
+      setState(() {
+        task = textEditingController.text;
+      });
+    });
+  }
+
+
+
 }
+
+
+
+
