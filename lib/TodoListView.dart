@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:gussveembd_tig169/SecondView.dart';
 import 'package:gussveembd_tig169/model.dart';
@@ -8,11 +6,12 @@ import 'package:provider/provider.dart';
 import 'SecondView.dart';
 import 'TodoList.dart';
 
-class TodoListView extends StatelessWidget{
+class TodoListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _myAppbar(context),
-      body: Consumer<MyState>(builder: (context, state, child) => TodoList(state.list),
+      body: Consumer<MyState>(
+        builder: (context, state, child) => TodoList(state.list),
       ),
       floatingActionButton: _nextPageButton(context),
     );
@@ -35,15 +34,13 @@ class TodoListView extends StatelessWidget{
   Widget _nextPageButton(context) {
     return FloatingActionButton(
       onPressed: () async {
-              var newTask = await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => SecondView(TodoItem(task: ''))));
-              if (newTask != null) {
-                Provider.of<MyState>(context, listen: false).addTodo(newTask);
-              }
-
-        
+        var newTask = await Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => SecondView(TodoItem(task: ''))));
+        if (newTask != null) {
+          Provider.of<MyState>(context, listen: false).addTodo(newTask);
+        }
       },
       child: Text(
         "+",
@@ -52,26 +49,36 @@ class TodoListView extends StatelessWidget{
     );
   }
 
-  Widget _popup(BuildContext context,) {
-    return PopupMenuButton(
-      itemBuilder: (context) => [
-            PopupMenuItem(
-              child: Text('all'),
-              value: 'one',
-            ),
-            PopupMenuItem(
-              child: Text('done'),
-              value: 'two',
-            ),
-            PopupMenuItem(
-              child: Text('undone'),
-              value: 'three',
-            )
-          ],
-      icon: Icon(
-        Icons.more_vert,
-        size: 30,
-        color: Colors.white,
-      ));
+  Widget _popup(
+    BuildContext context,
+  ) {
+    return Consumer<MyState>(
+      builder: (context, state, child) => PopupMenuButton(
+        itemBuilder: (context) => [
+          PopupMenuItem(
+            child: Text('all'),
+            value: 'one',
+          ),
+          PopupMenuItem(
+            child: Text('done'),
+            value: 'two',
+          ),
+          PopupMenuItem(
+            child: Text('undone'),
+            value: 'three',
+          )
+        ],
+        onSelected: (newValue) {
+          var state = Provider.of<MyState>(context, listen: false);
+          state.setFilterValue(newValue);
+          state.useFilter();
+        },
+        icon: Icon(
+          Icons.more_vert,
+          size: 30,
+          color: Colors.white,
+        ),
+      ),
+    );
   }
 }

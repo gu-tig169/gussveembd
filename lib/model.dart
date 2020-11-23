@@ -4,24 +4,39 @@ class TodoItem {
   String task;
   bool checkbox;
 
-  TodoItem({this.task, this.checkbox});
-
-   void check() {
-    if (this.checkbox == false) {
-      this.checkbox = true;
-    } else {
-      this.checkbox = false;
-    }
-  }
+  TodoItem({this.task, this.checkbox = false});
 }
-
 
 class MyState extends ChangeNotifier {
   List<TodoItem> _list = [];
 
-  List<TodoItem> get list => _list;
+  List<TodoItem> _filterList;
+
+  String _filterValue = 'one';
+
+  List<TodoItem> filtering(List<TodoItem> _list, String _filterAndy) {
+    if (_filterValue == 'one') {
+      _filterList = _list;
+    }
+
+    if (_filterValue == 'two') {
+      _filterList = _list.where((todo) => todo.checkbox == true).toList();
+    }
+    if (_filterValue == 'three') { 
+     _filterList = _list.where((todo) => todo.checkbox == false).toList();
+    }
+
+
+    return _filterList;
+   
+  }
+
+  List<TodoItem> get list {
+    return filtering(_list, _filterValue);
+  }
 
   void addTodo(TodoItem todo) {
+    _filterValue = 'one';
     _list.add(todo);
     notifyListeners();
   }
@@ -31,9 +46,17 @@ class MyState extends ChangeNotifier {
     notifyListeners();
   }
 
-  void checkBox(TodoItem todo) {
-   var ind = list.indexOf(todo);
-    _list[ind].check();
+  void checkBox(TodoItem todo, bool checkbox) {
+    todo.checkbox = checkbox;
     notifyListeners();
+  }
+
+  void setFilterValue(newValue) {
+    _filterValue = newValue;
+  }
+
+  useFilter() {
+    notifyListeners();
+    return filtering;
   }
 }
