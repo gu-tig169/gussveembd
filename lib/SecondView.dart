@@ -1,14 +1,36 @@
 import 'package:flutter/material.dart';
+import 'model.dart';
 
 class SecondView extends StatefulWidget {
+  final TodoItem todo;
+
+  SecondView(this.todo);
+
+  
   @override
-  _SecondViewState createState() => _SecondViewState();
+  State<StatefulWidget> createState() {
+    return SecondViewState(todo);
+  }
 }
 
-class _SecondViewState extends State<SecondView> {
-  BuildContext get context => null;
+class SecondViewState extends State<SecondView> {
+    String task;
+  bool checkbox;
 
-  @override
+  TextEditingController textEditingController;
+  SecondViewState(TodoItem todo) {
+    this.task = todo.task;
+    this.checkbox = todo.checkbox;
+
+    textEditingController = TextEditingController(text: todo.task);
+
+    textEditingController.addListener(() {
+      setState(() {
+        task = textEditingController.text;
+      });
+    });
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
@@ -34,7 +56,13 @@ class _SecondViewState extends State<SecondView> {
           top: 10,
         ),
         child: TextField(
-          decoration: InputDecoration(hintText: "Your Task"),
+          controller: textEditingController,
+              decoration: InputDecoration(
+                  focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white, width: 2)),
+                  enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white, width: 2)),
+                  hintText: 'What are you going to do?'),
         ));
   }
 
@@ -45,11 +73,12 @@ class _SecondViewState extends State<SecondView> {
         Container(
           height: 100,
         ),
-        Icon(Icons.add),
-        Text(
-          "Add",
-          style: TextStyle(fontSize: 25),
-        ),
+              FlatButton.icon(
+          onPressed: () {
+            Navigator.pop(context, TodoItem(checkbox: false, task: task));
+          },
+          label: Text('ADD'),
+          icon: Icon(Icons.add))
       ],
     );
   }
