@@ -48,7 +48,7 @@ class SecondViewState extends State<SecondView> {
                       borderSide: BorderSide(color: Colors.white, width: 2)),
                   enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.white, width: 2)),
-                  hintText: 'What are you going to do?'),
+                  hintText: "Add task!"),
         ));
   }
 
