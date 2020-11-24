@@ -17,9 +17,7 @@ class SecondViewState extends State<SecondView> {
   bool checkbox;
 
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: _myAppbar(context),
-        body: _body());
+    return Scaffold(appBar: _myAppbar(context), body: _body());
   }
 
   Widget _body() {
@@ -47,28 +45,30 @@ class SecondViewState extends State<SecondView> {
           controller: textEditingController,
           decoration: InputDecoration(
               focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white, width: 2)),
+                  borderSide: BorderSide(color: Colors.white30, width: 2)),
               enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white, width: 2)),
+                  borderSide: BorderSide(color: Colors.white30, width: 2)),
               hintText: "Add a task!"),
         ));
   }
 
   Widget _addButton() {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(
-          height: 100,
-        ),
-        FlatButton.icon(
-            onPressed: () {
-              Navigator.pop(context, TodoItem(checkbox: false, task: task));
-            },
-            label: Text('ADD'),
-            icon: Icon(Icons.add))
-      ],
-    );
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+    Container(
+      height: 100,
+    ),
+    FlatButton.icon(
+      onPressed: () {
+        Navigator.pop(context, TodoItem(checkbox: false, task: task));
+      },
+      label: Text('ADD',style: TextStyle(color: Colors.white54),),
+      icon: Icon(Icons.add, color: Colors.white54,),
+      
+    )
+        ],
+      );
   }
 
   Widget _myAppbar(context) {
@@ -77,7 +77,7 @@ class SecondViewState extends State<SecondView> {
         padding: const EdgeInsets.only(
           right: 50,
         ),
-        child: Center(child: Text("TIG169-TODO")),
+        child: Center(child: Text("TIG169-TODO", style: TextStyle(color: Colors.white54),)),
       ),
     );
   }

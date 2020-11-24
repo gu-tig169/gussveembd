@@ -33,9 +33,12 @@ class _TodoListState extends State<TodoList> {
               state.checkBox(todo, newValue);
           },
           checkColor: Colors.black,
+          activeColor: Colors.white12,
             ),
           title: Text(todo.task),
-          trailing: IconButton(icon:Icon(Icons.remove_rounded), onPressed: (){
+          trailing: IconButton(icon:Icon(Icons.remove_rounded),
+          color: Colors.white54,
+           onPressed: (){
             var state = Provider.of<MyState>(context, listen: false);
                 state.removeTodo(todo);
           }),
