@@ -23,7 +23,7 @@ class TodoListView extends StatelessWidget {
         padding: const EdgeInsets.only(
           left: 50,
         ),
-        child: Center(child: Text("TIG169-TODO")),
+        child: Center(child: Text("TIG169-TODO", style: TextStyle(color: Colors.white54),)),
       ),
       actions: [
         _popup(context),
@@ -32,7 +32,8 @@ class TodoListView extends StatelessWidget {
   }
 
   Widget _nextPageButton(context) {
-    return FloatingActionButton(
+    return FloatingActionButton( 
+     backgroundColor: Colors.white24,  
       onPressed: () async {
         var newTask = await Navigator.push(
             context,
@@ -76,7 +77,7 @@ class TodoListView extends StatelessWidget {
         icon: Icon(
           Icons.more_vert,
           size: 30,
-          color: Colors.white,
+          color: Colors.white54,
         ),
       ),
     );

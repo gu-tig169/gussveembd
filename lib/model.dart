@@ -16,18 +16,15 @@ class MyState extends ChangeNotifier {
 
   List<TodoItem> filtering(List<TodoItem> _list, String _filterValue,) {
     if (_filterValue == 'one') {
-      _filterList = _list;
-      
+      _filterList = _list; 
     }
-
     if (_filterValue == 'two') {
       _filterList = _list.where((todo) => todo.checkbox == true).toList();
     }
     if (_filterValue == 'three') { 
-     _filterList = _list.where((todo) => todo.checkbox == false).toList();
+      _filterList = _list.where((todo) => todo.checkbox == false).toList();
     }
-
-
+    
     return _filterList;
    
   }
@@ -60,7 +57,5 @@ class MyState extends ChangeNotifier {
     notifyListeners();
     return filtering;
   }
-
-
   
 }
