@@ -5,10 +5,12 @@ import 'package:provider/provider.dart';
 
 import 'TodoListView.dart';
 
+
 void main() {
   var state = MyState();
+  state.getList();
 
-    runApp(
+  runApp(
     ChangeNotifierProvider(
       create: (context) => state,
       child: MyApp(),
@@ -32,9 +34,4 @@ class _MyAppState extends State<MyApp> {
       home: TodoListView(),
     );
   }
-
-  
 }
-
-
-
