@@ -9,6 +9,7 @@ import 'TodoListView.dart';
 void main() {
   var state = MyState();
   state.getList();
+  //hämtar listan från API varje gång appen startas
 
   runApp(
     ChangeNotifierProvider(
