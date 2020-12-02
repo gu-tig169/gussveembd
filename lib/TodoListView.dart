@@ -23,7 +23,7 @@ class TodoListView extends StatelessWidget {
         padding: const EdgeInsets.only(
           left: 50,
         ),
-        child: Center(child: Text("TIG169-TODO", style: TextStyle(color: Colors.white54),)),
+        child: Center(child: Text("Emils Todo-App", style: TextStyle(color: Colors.white54),)),
       ),
       actions: [
         _popup(context),
